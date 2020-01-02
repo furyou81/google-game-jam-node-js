@@ -1,0 +1,54 @@
+'use strict';
+
+function solve(line) {
+    let e = 0;
+    let s = 0;
+    let myPath = "";
+    let endPath = "";
+    for (let i = 0; i < line.length; i++) {
+        line[i] === 'E' ? e++ : s++;
+    }
+    endPath = line[line.length - 1] === 'E' ? 'S' : 'E';
+    line[line.length - 1] === 'E' ? e-- : s--;
+
+    for (let i = 0; i < line.length - 1; i++) {
+        if (line[i] === 'E' && e > 0) {
+            myPath += "S";
+            e--;
+        } else {
+            myPath += 'E';
+        }
+    }
+    return myPath + endPath;
+}
+
+const main = () => {
+  const readline = require('readline');
+  let initiated = false;
+  let secondInitiated = false;
+  let j = 1;
+
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+  rl.on('line', line => {
+    if (!initiated) {
+        initiated = true;
+    } else {
+        if (!secondInitiated) {
+            secondInitiated = true;
+        } else {
+            console.log(`Case #${j++}: ${solve(line)}`);
+            secondInitiated = false;
+        }
+    
+    }
+  }).on('close', () => {
+    process.exit(0);
+  });
+};
+
+if (!module.parent) {
+  main();
+}
